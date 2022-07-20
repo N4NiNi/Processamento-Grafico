@@ -5,7 +5,7 @@ clc         % Limpa a tela da área de trabalho
 pkg load image
 
 A = imread('numero.jpg');
-figure, imshow(A);
+%figure, imshow(A);
 A_bin = im2bw(A, 0.5);
 N1 = imcrop(A_bin,[4,4,37,37]);
 N2 = imcrop(A_bin,[41,4,37,37]);
@@ -27,8 +27,29 @@ N0 = imcrop(A_bin,[360,4,37,37]);
 %figure, imshow(N5);
 %figure, imshow(N6);
 %figure, imshow(N7);
-figure, imshow(N8);
+%figure, imshow(N8);
 %figure, imshow(N9);
 %figure, imshow(N0);
-C = bweuler(~N8);
-figure, imshow(N8);
+
+%Euler - 8
+C = bweuler(~N8)
+
+%Excentricidade - 0
+rprops_zero = regionprops(N0, 'MajorAxisLength', 'MinorAxisLength');
+EixoMaior = rprops_zero.MajorAxisLength;
+EixoMenor = rprops_zero.MinorAxisLength;
+E = EixoMaior / EixoMenor
+
+
+%Compacidade - 1
+
+comp = regionprops(~N1, 'Area', 'Perimeter');
+max(comp.Perimeter)
+max(comp.Area)
+per = (max(comp.Perimeter)*max(comp.Perimeter))/max(comp.Area)
+
+%Area - 7
+x7 = regionprops(~N7, 'Area');
+sete = max(x7.Area)
+
+
