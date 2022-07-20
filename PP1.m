@@ -14,7 +14,7 @@ N4 = imcrop(A_bin,[121,4,37,37]);
 N5 = imcrop(A_bin,[162,4,37,37]);
 N6 = imcrop(A_bin,[201,4,37,37]);
 N7 = imcrop(A_bin,[241,4,37,37]);
-N8 = imcrop(A_bin,[287,10,25,25]);
+N8 = imcrop(A_bin,[281,4,37,37]);
 N9 = imcrop(A_bin,[321,4,37,37]);
 N0 = imcrop(A_bin,[360,4,37,37]);
 
@@ -30,8 +30,5 @@ N0 = imcrop(A_bin,[360,4,37,37]);
 figure, imshow(N8);
 %figure, imshow(N9);
 %figure, imshow(N0);
-
+C = bweuler(~N8);
 figure, imshow(N8);
-rotulada = bwlabel(N8,4);
-
-qtd_regioes = max(max(rotulada));
