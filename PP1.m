@@ -4,6 +4,17 @@ close all   % Limpar a memória
 clc         % Limpa a tela da área de trabalho
 pkg load image
 
+function euler(n)
+  bweuler(n)
+end
+
+function exentricidade(n)
+  rprops = regionprops('MajorAxisLength', 'MinorAxisLength');
+  eixoMaior = rprops.MajorAxisLength;
+  eixoMenor = rprops.MinorAxisLength;
+  E = eixoMaior / eixoMenor
+end
+
 A = imread('numero.jpg');
 %figure, imshow(A);
 A_bin = im2bw(A, 0.5);
@@ -18,7 +29,7 @@ N8 = imcrop(A_bin,[281,4,37,37]);
 N9 = imcrop(A_bin,[321,4,37,37]);
 N0 = imcrop(A_bin,[360,4,37,37]);
 
-
+Num={N0, N1, N2, N3, N4, N5, N6, N7, N8, N9};
 
 %figure, imshow(N1);
 %figure, imshow(N2);
@@ -32,14 +43,17 @@ N0 = imcrop(A_bin,[360,4,37,37]);
 %figure, imshow(N0);
 
 %Euler - 8
-C = bweuler(~N8)
+printf('Euler\n');
+for i=1:9
+  printf('N = %d  ', i);
+  euler(~Num{i});
+end
 
 %Excentricidade - 0
 rprops_zero = regionprops(N0, 'MajorAxisLength', 'MinorAxisLength');
 EixoMaior = rprops_zero.MajorAxisLength;
 EixoMenor = rprops_zero.MinorAxisLength;
 E = EixoMaior / EixoMenor
-
 
 %Compacidade - 1
 
