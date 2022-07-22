@@ -4,6 +4,15 @@ close all   % Limpar a memória
 clc         % Limpa a tela da área de trabalho
 pkg load image
 
+function compacidade(n)
+  
+  comp = regionprops(~n, 'Area', 'Perimeter');
+  max(comp.Perimeter);
+  max(comp.Area);
+  per = (max(comp.Perimeter)*max(comp.Perimeter))/max(comp.Area)
+
+end
+
 function euler(n)
   bweuler(n)
 end
@@ -44,24 +53,25 @@ Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9};
 
 %Euler - 8
 printf('Euler\n');
-for i=1:9
-  printf('N = %d  ', i);
+for i=1:10
+  printf('N = %d  ', i-1);
   euler(~Num{i});
 end
 
 %Excentricidade - 0
 printf('Excentricidade\n')
-for i=1:9
-  printf('N = %d ', i);
-  excentricidade(~Num{i});
+for i=1:10
+  printf('N = %d ', i-1);
+  excentricidade(Num{i});
 end
 
-%Compacidade - 1
+%Compacidade - 3
 
-comp = regionprops(~N1, 'Area', 'Perimeter');
-max(comp.Perimeter)
-max(comp.Area)
-per = (max(comp.Perimeter)*max(comp.Perimeter))/max(comp.Area)
+printf('Compacidade\n')
+for i=1:10
+  printf('N = %d ', i-1);
+  compacidade(Num{i});
+end
 
 %Area - 7
 x7 = regionprops(~N7, 'Area');
