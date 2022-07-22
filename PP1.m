@@ -8,8 +8,8 @@ function euler(n)
   bweuler(n)
 end
 
-function exentricidade(n)
-  rprops = regionprops('MajorAxisLength', 'MinorAxisLength');
+function excentricidade(n)
+  rprops = regionprops(n, 'MajorAxisLength', 'MinorAxisLength');
   eixoMaior = rprops.MajorAxisLength;
   eixoMenor = rprops.MinorAxisLength;
   E = eixoMaior / eixoMenor
@@ -29,7 +29,7 @@ N8 = imcrop(A_bin,[281,4,37,37]);
 N9 = imcrop(A_bin,[321,4,37,37]);
 N0 = imcrop(A_bin,[360,4,37,37]);
 
-Num={N0, N1, N2, N3, N4, N5, N6, N7, N8, N9};
+Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9};
 
 %figure, imshow(N1);
 %figure, imshow(N2);
@@ -50,10 +50,11 @@ for i=1:9
 end
 
 %Excentricidade - 0
-rprops_zero = regionprops(N0, 'MajorAxisLength', 'MinorAxisLength');
-EixoMaior = rprops_zero.MajorAxisLength;
-EixoMenor = rprops_zero.MinorAxisLength;
-E = EixoMaior / EixoMenor
+printf('Excentricidade\n')
+for i=1:9
+  printf('N = %d ', i);
+  excentricidade(~Num{i});
+end
 
 %Compacidade - 1
 
