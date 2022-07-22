@@ -5,12 +5,10 @@ clc         % Limpa a tela da área de trabalho
 pkg load image
 
 function compacidade(n)
-  
   comp = regionprops(~n, 'Area', 'Perimeter');
   max(comp.Perimeter);
   max(comp.Area);
   per = (max(comp.Perimeter)*max(comp.Perimeter))/max(comp.Area)
-
 end
 
 function euler(n)
@@ -59,24 +57,14 @@ figure, imshow(N0);
 %Euler - 8
 printf('Euler\n');
 for i=1:10
-<<<<<<< HEAD
   printf('N = %d  ', i - 1);
-=======
-  printf('N = %d  ', i-1);
->>>>>>> 42a7355a1850a72074873e95f81eefb47ebb92ef
   euler(~Num{i});
 end
 
 %Excentricidade - 0
-<<<<<<< HEAD
 printf('Excentricidade\n');
 for i=1:10  
   printf('N = %d ', i - 1);
-=======
-printf('Excentricidade\n')
-for i=1:10
-  printf('N = %d ', i-1);
->>>>>>> 42a7355a1850a72074873e95f81eefb47ebb92ef
   excentricidade(Num{i});
 end
 
