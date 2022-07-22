@@ -15,6 +15,11 @@ function excentricidade(n)
   E = eixoMaior / eixoMenor
 end
 
+function area(n)
+  rprops = regionprops(n, 'Area');
+  max(rprops.Area)
+end
+
 A = imread('numero.jpg');
 %figure, imshow(A);
 A_bin = im2bw(A, 0.5);
@@ -34,26 +39,26 @@ Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9};
 %figure, imshow(N1);
 %figure, imshow(N2);
 %figure, imshow(N3);
-%figure, imshow(N4);
+figure, imshow(N4);
 %figure, imshow(N5);
 %figure, imshow(N6);
 %figure, imshow(N7);
 %figure, imshow(N8);
 %figure, imshow(N9);
-%figure, imshow(N0);
+figure, imshow(N0);
 
 %Euler - 8
 printf('Euler\n');
-for i=1:9
-  printf('N = %d  ', i);
+for i=1:10
+  printf('N = %d  ', i - 1);
   euler(~Num{i});
 end
 
 %Excentricidade - 0
-printf('Excentricidade\n')
-for i=1:9
-  printf('N = %d ', i);
-  excentricidade(~Num{i});
+printf('Excentricidade\n');
+for i=1:10  
+  printf('N = %d ', i - 1);
+  excentricidade(Num{i});
 end
 
 %Compacidade - 1
@@ -63,8 +68,9 @@ max(comp.Perimeter)
 max(comp.Area)
 per = (max(comp.Perimeter)*max(comp.Perimeter))/max(comp.Area)
 
-%Area - 7
-x7 = regionprops(~N7, 'Area');
-sete = max(x7.Area)
-
-
+%Area - 1
+printf('Area\n');
+for i=1:10 
+  printf('N = %d ', i - 1);
+  area(~Num{i})
+end
