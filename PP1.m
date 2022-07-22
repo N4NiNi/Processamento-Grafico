@@ -3,6 +3,28 @@ clear       % Fechar todas as janelas
 close all   % Limpar a memória
 clc         % Limpa a tela da área de trabalho
 pkg load image
+function bwafin = esqueleto(n)
+  Inf=100;
+  bwafin = bwmorph(n, 'thin',Inf);
+  %figure, imshow(bwafin), title('Afinamento');
+end
+
+function assinatura(n)
+  [B1,L1,N1] = bwboundaries(n);
+
+  if mod(N1,2)==0
+    subplotrow = ceil(sqrt(N1));
+  else
+    subplotrow = ceil(sqrt(N1)+1);
+  end
+  boundary1 = B1{10};
+  [th, r]=cart2pol(boundary1(:,2)-mean(boundary1(:,2)), ...
+  boundary1(:,1)-mean(boundary1(:,1)));
+  figure;
+  plot(th,r,'.');
+  axis([-pi pi 0 100]);
+  xlabel('radiano');ylabel('r');
+end
 
 function compacidade(n)
   comp = regionprops(~n, 'Area', 'Perimeter');
@@ -46,20 +68,13 @@ Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9};
 %figure, imshow(N1);
 %figure, imshow(N2);
 %figure, imshow(N3);
-figure, imshow(N4);
+%figure, imshow(N4);
 %figure, imshow(N5);
 %figure, imshow(N6);
 %figure, imshow(N7);
 %figure, imshow(N8);
 %figure, imshow(N9);
-figure, imshow(N0);
-
-%Euler - 8
-printf('Euler\n');
-for i=1:10
-  printf('N = %d  ', i - 1);
-  euler(~Num{i});
-end
+%figure, imshow(N0);
 
 %Excentricidade - 0
 printf('Excentricidade\n');
@@ -68,13 +83,6 @@ for i=1:10
   excentricidade(Num{i});
 end
 
-%Compacidade - 3
-
-printf('Compacidade\n')
-for i=1:10
-  printf('N = %d ', i-1);
-  compacidade(Num{i});
-end
 
 %Area - 1
 printf('Area\n');
@@ -82,3 +90,42 @@ for i=1:10
   printf('N = %d ', i - 1);
   area(~Num{i})
 end
+
+
+%esqueleto - 2
+I = esqueleto(~N2);
+figure, imshow(I);
+
+
+%Compacidade - 3
+printf('Compacidade\n')
+for i=1:10
+  printf('N = %d ', i-1);
+  compacidade(Num{i});
+end
+
+
+%assinatura - 4
+%assinatura(~esqueleto(~N4));
+%assinatura - 5
+assinatura(N5);
+
+
+%Euler - 8
+printf('Euler\n');
+for i=1:10
+  printf('N = %d  ', i - 1);
+  euler(~Num{i});
+end
+
+
+
+
+
+
+
+
+
+
+
+comp
