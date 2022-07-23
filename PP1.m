@@ -1,15 +1,67 @@
-%Limpando a Ã¡rea
+%--- PP1
+%--- Integrantes: Guilherme Fumagali - 792182
+%---              Guilherme Silva    - 792183
+%---              Rodrigo Amaral     - 792241
+%---              Vinicius Nanini    - 795181
+
+
+
+%Limpando a Area
 clear       % Fechar todas as janelas
-close all   % Limpar a memÃ³ria
-clc         % Limpa a tela da Ã¡rea de trabalho
+close all   % Limpar a memória
+clc         % Limpa a tela da Área de trabalho
 pkg load image
-warning('off','all');
+warning('off','all'); %desativar warnings
+function Aprox_poligonal4(BW)
+  
+  
+
+    s=size(BW);
+    for row = 2:55:s(1)
+        for col=1:s(2)
+            if BW(row,col), break;
+            end
+        end
+        
+contour = bwboundaries (BW,4);
+contour = cell2mat (contour);
+
+        if(~isempty(contour))
+            hold on; 
+            plot(contour(:,2),contour(:,1),'g','LineWidth',4);
+            hold on; 
+            plot(col, row,'gx','LineWidth',2);
+        else
+            hold on; 
+            plot(col, row,'rx','LineWidth',2);
+        end
+    end
+end
+
+function img = aprox(n)
+  
+  
+BW1 = ~im2bw(n);
+
+g1 = ones(size(BW1));
+
+g1(2:2:end,:,:) = 0;
+g1(:,2:2:end,:) = 0;
+
+
+figure, imshow(BW1), title('Imagem 1 com 4-conectados'); hold on;
+gimage = imshow(g1);
+set(gimage,'AlphaData', 0.8);
+Aprox_poligonal4(BW1);
+end
+
+
 function cadeia(n)
   
+  
+  
   I = n;
-  %I = im2bw(I);
   figure, imshow(I);
-  %I = ~I;
 
   Edges = edge(I, 'Sobel');
 
@@ -25,7 +77,6 @@ function cadeia(n)
       j=0;
       array = [];
       [rows, columns] = size(b{k,1});
-      %fprintf('Origem linha %d(x,y): %d %d\n', k, b{k,1}(1,2), b{k,1}(1,1));
       for i=1:rows-1
           y = round(b{k,1}(i,1)/grid);
           x = round(b{k,1}(i,2)/grid);
@@ -65,23 +116,23 @@ function cadeia(n)
               text((x+0.5)*grid, (y+0.5)*grid,num2str(array(j)),'FontSize',9,'Color',[0 .5 0]);
           end
       end;
-      %fprintf('Código linha %d: ', k);
       for i = 1:j
-       %   fprintf('%d', array(i));
       end;
-      %fprintf('\n');
   end;
   hold off
 end
 
 
 function bwafin = esqueleto(n)
+  
+  
   Inf=100;
   bwafin = bwmorph(n, 'thin',Inf);
-  %figure, imshow(bwafin), title('Afinamento');
 end
 
 function assinatura(n)
+  
+  
   [B1,L1,N1] = bwboundaries(~n);
   figure, imshow(n);
   for cnt = 1:N1
@@ -91,8 +142,6 @@ function assinatura(n)
       hold on;
           text(mean(boundary1(:,2)), mean(boundary1(:,1)),num2str(cnt), 'Color', 'red');
   end
-
-  %plota a funÃƒÂ§ÃƒÂ£o assinatura
   figure;
   if mod(N1,2)==0
       subplotrow = ceil(sqrt(N1));
@@ -105,7 +154,6 @@ function assinatura(n)
       [th, r]=cart2pol(boundary1(:,2)-mean(boundary1(:,2)), ...
       boundary1(:,1)-mean(boundary1(:,1)));
       subplot(subplotrow,round(N1/subplotrow),cnt);
-      %subplot(subplotrow,round(N1/subplotrow),cnt);
       
       plot(th,r,'.');
       axis([-pi pi 0 50]);
@@ -113,7 +161,11 @@ function assinatura(n)
       title(['Objeto ', num2str(cnt)]);
   end
 end
+
+
 function compacidade(n)
+  
+  
   comp = regionprops(~n, 'Area', 'Perimeter');
   max(comp.Perimeter);
   max(comp.Area);
@@ -121,10 +173,14 @@ function compacidade(n)
 end
 
 function euler(n)
+  
+  
   bweuler(n)
 end
 
 function excentricidade(n)
+  
+  
   rprops = regionprops(n, 'MajorAxisLength', 'MinorAxisLength');
   eixoMaior = rprops.MajorAxisLength;
   eixoMenor = rprops.MinorAxisLength;
@@ -132,13 +188,22 @@ function excentricidade(n)
 end
 
 function area(n)
+  
+%Main
+
+%--- Imagem original
+
   rprops = regionprops(n, 'Area');
   max(rprops.Area)
 end
 
 A = imread('numero.jpg');
-X = isgray(A);
 %figure, imshow(A);
+
+%---
+
+
+%--- Separação dos números
 
 N1 = imcrop(A,[4,4,37,37]);
 N2 = imcrop(A,[41,4,37,37]);
@@ -151,7 +216,12 @@ N8 = imcrop(A,[281,4,37,37]);
 N9 = imcrop(A,[321,4,37,37]);
 N0 = imcrop(A,[360,4,37,37]);
 
-Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9};
+Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9}; %armazenando em um vetor
+
+%---
+
+
+%--- Visualização dos números
 
 %figure, imshow(N1);
 %figure, imshow(N2);
@@ -164,7 +234,11 @@ Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9};
 %figure, imshow(N9);
 %figure, imshow(N0);
 
-%Excentricidade - 0
+%---
+
+
+%--- Excentricidade ->  0 (razão entre o eixo maior e o eixo menor é 1)
+
 printf('Excentricidade\n');
 for i=1:10  
   bin = im2bw(Num{i}, 0.5);
@@ -172,8 +246,11 @@ for i=1:10
   excentricidade(bin);
 end
 
+%---
 
-%Area - 1
+
+%--- Area -> 1 (Menor area de todos os números)
+
 printf('Area\n');
 for i=1:10 
    bin = im2bw(Num{i}, 0.5);
@@ -181,46 +258,82 @@ for i=1:10
   area(~bin)
 end
 
+%---
 
-%esqueleto - 2
- bin = im2bw(N2, 0.5);
+
+%--- Esqueleto -> 2 (Melhor visualização do número)
+
+bin = im2bw(N2, 0.5);
 I = esqueleto(~bin);
 figure, imshow(I);
 
+%---
 
-%Compacidade - 3
+
+%--- Compacidade -> 3 (Maior compacidade de todos os números)
+
 printf('Compacidade\n')
 for i=1:10
-   bin = im2bw(Num{i}, 0.5);
+  bin = im2bw(Num{i}, 0.5);
   printf('N = %d ', i-1);
   compacidade(bin);
 end
 
+%---
 
-%assinatura do esqueleto - 4
- bin = im2bw(N4, 0.5);
+
+%--- Assinatura do esqueleto -> 4 (Assinatura unica para cada número)
+
+bin = im2bw(N4, 0.5);
 assinatura(~esqueleto(~bin));
-%assinatura - 5
- bin = im2bw(N5, 0.5);
+
+%---
+
+
+%--- Assinatura -> 5 (Assinatura unica para cada número)
+
+bin = im2bw(N5, 0.5);
 assinatura(bin);
 
+%---
 
-%Euler - 8
+
+%--- Aproximação poligonal do esqueleto -> 6 (Visualização única)
+
+bin = im2bw(N6, 0.5);
+aprox(~esqueleto(~bin));
+
+%---
+
+
+%--- Cadeia -> 7 (Visualização única)
+
+cadeia(N7);
+
+%---
+
+
+%--- Euler -> 8 (Único que resulta em -1)
+
+
 printf('Euler\n');
 for i=1:10
-   bin = im2bw(Num{i}, 0.5);
+  bin = im2bw(Num{i}, 0.5);
   printf('N = %d  ', i - 1);
   euler(~bin);
 end
 
-%cadeia - 7
-cadeia(N7);
+%---
 
-%cadeia do esqueleto
-bin = im2bw(N9, 0.5);
-I = convhull(bin);
 
-figure, imshow(I);
+%--- Aproximação poligonal -> 9 (Visualização única)
+
+aprox(N9);
+
+%---
+
+
+
 
 
 
