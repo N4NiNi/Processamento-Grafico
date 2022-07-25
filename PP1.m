@@ -49,7 +49,7 @@ g1(2:2:end,:,:) = 0;
 g1(:,2:2:end,:) = 0;
 
 
-figure, imshow(BW1), title('Imagem 1 com 4-conectados'); hold on;
+figure, imshow(BW1), title('Imagem com 4-conectados'); hold on;
 gimage = imshow(g1);
 set(gimage,'AlphaData', 0.8);
 Aprox_poligonal4(BW1);
@@ -61,12 +61,11 @@ function cadeia(n)
   
   
   I = n;
-  figure, imshow(I);
 
   Edges = edge(I, 'Sobel');
 
 
-  figure, imshow(~Edges);
+  figure, imshow(~Edges), title("Cadeia - Número 7");
   hold on
 
   b = bwboundaries(I);
@@ -134,7 +133,7 @@ function assinatura(n)
   
   
   [B1,L1,N1] = bwboundaries(~n);
-  figure, imshow(n);
+  figure, imshow(n), title('Assinatura');
   for cnt = 1:N1
       hold on;
           boundary1 = B1{cnt};
@@ -158,7 +157,7 @@ function assinatura(n)
       plot(th,r,'.');
       axis([-pi pi 0 50]);
       xlabel('radiano');ylabel('r');
-      title(['Objeto ', num2str(cnt)]);
+      title(['Grafico da assinatura ']);
   end
 end
 
@@ -265,7 +264,7 @@ end
 
 bin = im2bw(N2, 0.5);
 I = esqueleto(~bin);
-figure, imshow(I);
+figure, imshow(I), title('Esqueleto - Número 2');
 
 %---
 
