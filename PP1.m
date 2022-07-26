@@ -1,3 +1,4 @@
+
 %--- PP1
 %--- Integrantes: Guilherme Fumagali - 792182
 %---              Guilherme Silva    - 792183
@@ -202,7 +203,7 @@ A = imread('numero.jpg');
 %---
 
 
-%--- Separação dos números
+%--- Separaï¿½ï¿½o dos nï¿½meros
 
 N1 = imcrop(A,[4,4,37,37]);
 N2 = imcrop(A,[41,4,37,37]);
@@ -220,7 +221,7 @@ Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9}; %armazenando em um vetor
 %---
 
 
-%--- Visualização dos números
+%--- Visualizaï¿½ï¿½o dos nï¿½meros
 
 %figure, imshow(N1);
 %figure, imshow(N2);
@@ -236,7 +237,7 @@ Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9}; %armazenando em um vetor
 %---
 figure;
 
-%--- Excentricidade ->  0 (razão entre o eixo maior e o eixo menor = 1)
+%--- Excentricidade ->  0 (razï¿½o entre o eixo maior e o eixo menor = 1)
 
 printf('Excentricidade\n');
 for i=1:10  
@@ -248,7 +249,7 @@ subplot(2,3,1), imshow(N0), title('Excentricidade = 1');
 %---
 
 
-%--- Area -> 1 (Menor area de todos os números)
+%--- Area -> 1 (Menor area de todos os nï¿½meros)
 
 printf('Area\n');
 for i=1:10 
@@ -260,16 +261,16 @@ subplot(2,3,2), imshow(N1), title('Menor Area')
 %---
 
 
-%--- Esqueleto -> 2 (Melhor visualização do número)
+%--- Esqueleto -> 2 (Melhor visualizaï¿½ï¿½o do nï¿½mero)
 
 bin = im2bw(N2, 0.5);
 I = esqueleto(~bin);
-%figure, imshow(I), title('Esqueleto - Número 2');
+%figure, imshow(I), title('Esqueleto - Nï¿½mero 2');
 subplot(2,3,3), imshow(I), title('Esqueleto');
 %---
 
 
-%--- Compacidade -> 3 (Maior compacidade de todos os números)
+%--- Compacidade -> 3 (Maior compacidade de todos os nï¿½meros)
 
 printf('Compacidade\n')
 for i=1:10
@@ -281,7 +282,7 @@ subplot(2,3,4), imshow(N3), title('Maior compacidade')
 %---
 
 
-%--- Assinatura do esqueleto -> 4 (Assinatura unica para cada número)
+%--- Assinatura do esqueleto -> 4 (Assinatura unica para cada nï¿½mero)
 
 bin = im2bw(N4, 0.5);
 assinatura(~esqueleto(~bin));
@@ -289,7 +290,7 @@ assinatura(~esqueleto(~bin));
 %---
 
 
-%--- Assinatura -> 5 (Assinatura unica para cada número)
+%--- Assinatura -> 5 (Assinatura unica para cada nï¿½mero)
 
 bin = im2bw(N5, 0.5);
 assinatura(bin);
@@ -297,7 +298,7 @@ assinatura(bin);
 %---
 
 
-%--- Aproximação poligonal do esqueleto -> 6 (Visualização única)
+%--- Aproximaï¿½ï¿½o poligonal do esqueleto -> 6 (Visualizaï¿½ï¿½o ï¿½nica)
 
 bin = im2bw(N6, 0.5);
 aprox(~esqueleto(~bin));
@@ -305,7 +306,7 @@ aprox(~esqueleto(~bin));
 %---
 
 
-%--- Cadeia -> 7 (Visualização unica)
+%--- Cadeia -> 7 (Visualizaï¿½ï¿½o unica)
 
 cadeia(N7);
 
@@ -325,14 +326,9 @@ end
 %---
 
 
-%--- Aproximação poligonal -> 9 (Visualização unica)
+%--- Aproximaï¿½ï¿½o poligonal -> 9 (Visualizaï¿½ï¿½o unica)
 
 aprox(N9);
 
 %---
-
-
-
-
-
 
