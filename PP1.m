@@ -8,8 +8,8 @@
 
 %Limpando a Area
 clear       % Fechar todas as janelas
-close all   % Limpar a memória
-clc         % Limpa a tela da Área de trabalho
+close all   % Limpar a memï¿½ria
+clc         % Limpa a tela da ï¿½rea de trabalho
 pkg load image
 warning('off','all'); %desativar warnings
 function Aprox_poligonal4(BW)
@@ -65,7 +65,7 @@ function cadeia(n)
   Edges = edge(I, 'Sobel');
 
 
-  figure, imshow(~Edges), title("Cadeia - Número 7");
+  figure, imshow(~Edges), title("Cadeia - Nï¿½mero 7");
   hold on
 
   b = bwboundaries(I);
@@ -234,9 +234,9 @@ Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9}; %armazenando em um vetor
 %figure, imshow(N0);
 
 %---
+figure;
 
-
-%--- Excentricidade ->  0 (razão entre o eixo maior e o eixo menor é 1)
+%--- Excentricidade ->  0 (razão entre o eixo maior e o eixo menor = 1)
 
 printf('Excentricidade\n');
 for i=1:10  
@@ -244,7 +244,7 @@ for i=1:10
   printf('N = %d ', i - 1);
   excentricidade(bin);
 end
-
+subplot(2,3,1), imshow(N0), title('Excentricidade = 1');
 %---
 
 
@@ -256,7 +256,7 @@ for i=1:10
   printf('N = %d ', i - 1);
   area(~bin)
 end
-
+subplot(2,3,2), imshow(N1), title('Menor Area')
 %---
 
 
@@ -264,8 +264,8 @@ end
 
 bin = im2bw(N2, 0.5);
 I = esqueleto(~bin);
-figure, imshow(I), title('Esqueleto - Número 2');
-
+%figure, imshow(I), title('Esqueleto - Número 2');
+subplot(2,3,3), imshow(I), title('Esqueleto');
 %---
 
 
@@ -277,7 +277,7 @@ for i=1:10
   printf('N = %d ', i-1);
   compacidade(bin);
 end
-
+subplot(2,3,4), imshow(N3), title('Maior compacidade')
 %---
 
 
@@ -305,14 +305,14 @@ aprox(~esqueleto(~bin));
 %---
 
 
-%--- Cadeia -> 7 (Visualização única)
+%--- Cadeia -> 7 (Visualização unica)
 
 cadeia(N7);
 
 %---
 
 
-%--- Euler -> 8 (Único que resulta em -1)
+%--- Euler -> 8 (Unico que resulta em -1)
 
 
 printf('Euler\n');
@@ -325,7 +325,7 @@ end
 %---
 
 
-%--- Aproximação poligonal -> 9 (Visualização única)
+%--- Aproximação poligonal -> 9 (Visualização unica)
 
 aprox(N9);
 
