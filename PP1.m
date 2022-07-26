@@ -129,7 +129,7 @@ function bwafin = esqueleto(n)
   bwafin = bwmorph(n, 'thin',Inf);
 end
 
-function assinatura(n)
+function A = assinatura(n)
   
   
   [B1,L1,N1] = bwboundaries(~n);
@@ -141,7 +141,7 @@ function assinatura(n)
       hold on;
           text(mean(boundary1(:,2)), mean(boundary1(:,1)),num2str(cnt), 'Color', 'red');
   end
-  figure;
+  A = figure;
   if mod(N1,2)==0
       subplotrow = ceil(sqrt(N1));
   else
@@ -235,6 +235,7 @@ Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9}; %armazenando em um vetor
 
 %---
 
+figure;
 
 %--- Excentricidade ->  0 (razão entre o eixo maior e o eixo menor é 1)
 
@@ -244,6 +245,7 @@ for i=1:10
   printf('N = %d ', i - 1);
   excentricidade(bin);
 end
+subplot(2,5,1), imshow(N0), title('Excentricidade = 1');
 
 %---
 
@@ -252,10 +254,11 @@ end
 
 printf('Area\n');
 for i=1:10 
-   bin = im2bw(Num{i}, 0.5);
+  bin = im2bw(Num{i}, 0.5);
   printf('N = %d ', i - 1);
   area(~bin)
 end
+subplot(2,5,2), imshow(N1), title('Menor área')
 
 %---
 
@@ -264,7 +267,7 @@ end
 
 bin = im2bw(N2, 0.5);
 I = esqueleto(~bin);
-figure, imshow(I), title('Esqueleto - Número 2');
+subplot(2,5,3), imshow(I), title('Esqueleto');
 
 %---
 
@@ -277,6 +280,7 @@ for i=1:10
   printf('N = %d ', i-1);
   compacidade(bin);
 end
+subplot(2,5,4), imshow(N3), title('Maior compacidade')
 
 %---
 
@@ -284,7 +288,7 @@ end
 %--- Assinatura do esqueleto -> 4 (Assinatura unica para cada número)
 
 bin = im2bw(N4, 0.5);
-assinatura(~esqueleto(~bin));
+subplot(2,5,6), imshow(assinatura(~esqueleto(~bin)));
 
 %---
 
@@ -292,7 +296,7 @@ assinatura(~esqueleto(~bin));
 %--- Assinatura -> 5 (Assinatura unica para cada número)
 
 bin = im2bw(N5, 0.5);
-assinatura(bin);
+subplot(2,5,7), imshow(assinatura(bin));
 
 %---
 
