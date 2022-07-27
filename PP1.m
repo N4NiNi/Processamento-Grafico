@@ -1,11 +1,8 @@
-
 %--- PP1
 %--- Integrantes: Guilherme Fumagali - 792182
 %---              Guilherme Silva    - 792183
 %---              Rodrigo Amaral     - 792241
 %---              Vinicius Nanini    - 795181
-
-
 
 %Limpando a Area
 clear       % Fechar todas as janelas
@@ -13,10 +10,8 @@ close all   % Limpar a mem�ria
 clc         % Limpa a tela da �rea de trabalho
 pkg load image
 warning('off','all'); %desativar warnings
-function Aprox_poligonal4(BW)
-  
-  
 
+function Aprox_poligonal4(BW)
     s=size(BW);
     for row = 2:55:s(1)
         for col=1:s(2)
@@ -40,34 +35,25 @@ contour = cell2mat (contour);
 end
 
 function img = aprox(n)
-  
-  
-BW1 = ~im2bw(n);
+  BW1 = ~im2bw(n);
 
-g1 = ones(size(BW1));
+  g1 = ones(size(BW1));
+  g1(2:2:end,:,:) = 0;
+  g1(:,2:2:end,:) = 0;
 
-g1(2:2:end,:,:) = 0;
-g1(:,2:2:end,:) = 0;
-
-
-figure, imshow(BW1), title('Imagem com 4-conectados'); hold on;
-gimage = imshow(g1);
-set(gimage,'AlphaData', 0.8);
-Aprox_poligonal4(BW1);
+  figure('Name','Aproximacao Poligonal', 'NumberTitle', 'off'), imshow(BW1), title('Imagem com 4-conectados'); hold on;
+  gimage = imshow(g1);
+  set(gimage,'AlphaData', 0.8);
+  Aprox_poligonal4(BW1);
 end
 
 
 function cadeia(n)
-  
-  
-  
   I = n;
 
   Edges = edge(I, 'Sobel');
 
-
-  figure, imshow(~Edges), title("Cadeia - N�mero 7");
-  hold on
+  figure('Name', 'Cadeia', 'NumberTitle', 'off'), imshow(~Edges), title("Cadeia"); hold on;
 
   b = bwboundaries(I);
   [boundarycount, asdf] = size(b);
@@ -123,18 +109,15 @@ function cadeia(n)
 end
 
 
-function bwafin = esqueleto(n)
-  
-  
+function bwafin = esqueleto(n)  
   Inf=100;
   bwafin = bwmorph(n, 'thin',Inf);
 end
 
 function assinatura(n)
-  
-  
   [B1,L1,N1] = bwboundaries(~n);
-  figure, imshow(n), title('Assinatura');
+  figure('Name', 'Assinatura', 'NumberTitle', 'off');
+  subplot(2,1,2), imshow(n), title('Assinatura');
   for cnt = 1:N1
       hold on;
           boundary1 = B1{cnt};
@@ -142,13 +125,13 @@ function assinatura(n)
       hold on;
           text(mean(boundary1(:,2)), mean(boundary1(:,1)),num2str(cnt), 'Color', 'red');
   end
-  figure;
+  subplot(2,1,1);
   if mod(N1,2)==0
       subplotrow = ceil(sqrt(N1));
   else
       subplotrow = ceil(sqrt(N1)+1);
   end
-
+  
   for cnt = 1:N1
       boundary1 = B1{cnt};
       [th, r]=cart2pol(boundary1(:,2)-mean(boundary1(:,2)), ...
@@ -164,8 +147,6 @@ end
 
 
 function compacidade(n)
-  
-  
   comp = regionprops(~n, 'Area', 'Perimeter');
   max(comp.Perimeter);
   max(comp.Area);
@@ -173,14 +154,10 @@ function compacidade(n)
 end
 
 function euler(n)
-  
-  
   bweuler(n)
 end
 
-function excentricidade(n)
-  
-  
+function excentricidade(n) 
   rprops = regionprops(n, 'MajorAxisLength', 'MinorAxisLength');
   eixoMaior = rprops.MajorAxisLength;
   eixoMenor = rprops.MinorAxisLength;
@@ -188,23 +165,17 @@ function excentricidade(n)
 end
 
 function area(n)
-  
-%Main
-
-%--- Imagem original
-
   rprops = regionprops(n, 'Area');
   max(rprops.Area)
 end
 
+%------------------------------------------------
+%---------------------MAIN-----------------------
+%------------------------------------------------
+
 A = imread('numero.jpg');
-%figure, imshow(A);
 
-%---
-
-
-%--- Separa��o dos n�meros
-
+%--- Separacao dos numeros
 N1 = imcrop(A,[4,4,37,37]);
 N2 = imcrop(A,[41,4,37,37]);
 N3 = imcrop(A,[83,4,37,37]);
@@ -215,14 +186,11 @@ N7 = imcrop(A,[241,4,37,37]);
 N8 = imcrop(A,[281,4,37,37]);
 N9 = imcrop(A,[321,4,37,37]);
 N0 = imcrop(A,[360,4,37,37]);
-
 Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9}; %armazenando em um vetor
-
 %---
 
 
-%--- Visualiza��o dos n�meros
-
+%--- Visualizacao dos numeros
 %figure, imshow(N1);
 %figure, imshow(N2);
 %figure, imshow(N3);
@@ -233,102 +201,84 @@ Num = {N0, N1, N2, N3, N4, N5, N6, N7, N8, N9}; %armazenando em um vetor
 %figure, imshow(N8);
 %figure, imshow(N9);
 %figure, imshow(N0);
-
 %---
-figure;
+
+figure('name', 'Numeros 1, 2, 3 e 4', 'Numbertitle', 'off');
 
 %--- Excentricidade ->  0 (raz�o entre o eixo maior e o eixo menor = 1)
-
 printf('Excentricidade\n');
 for i=1:10  
   bin = im2bw(Num{i}, 0.5);
   printf('N = %d ', i - 1);
   excentricidade(bin);
 end
-subplot(2,3,1), imshow(N0), title('Excentricidade = 1');
+subplot(2,2,1), imshow(N0), title('Excentricidade = 1');
 %---
 
 
-%--- Area -> 1 (Menor area de todos os n�meros)
-
+%--- Area -> 1 (Menor area de todos os numeros)
 printf('Area\n');
 for i=1:10 
    bin = im2bw(Num{i}, 0.5);
   printf('N = %d ', i - 1);
   area(~bin)
 end
-subplot(2,3,2), imshow(N1), title('Menor Area')
+subplot(2,2,2), imshow(N1), title('Menor Area')
 %---
 
 
 %--- Esqueleto -> 2 (Melhor visualiza��o do n�mero)
-
 bin = im2bw(N2, 0.5);
 I = esqueleto(~bin);
-%figure, imshow(I), title('Esqueleto - N�mero 2');
-subplot(2,3,3), imshow(I), title('Esqueleto');
+subplot(2,2,3), imshow(I), title('Esqueleto');
 %---
 
 
-%--- Compacidade -> 3 (Maior compacidade de todos os n�meros)
-
+%--- Compacidade -> 3 (Maior compacidade de todos os numeros)
 printf('Compacidade\n')
 for i=1:10
   bin = im2bw(Num{i}, 0.5);
   printf('N = %d ', i-1);
   compacidade(bin);
 end
-subplot(2,3,4), imshow(N3), title('Maior compacidade')
+subplot(2,2,4), imshow(N3), title('Maior compacidade')
 %---
 
 
-%--- Assinatura do esqueleto -> 4 (Assinatura unica para cada n�mero)
-
+%--- Assinatura do esqueleto -> 4 (Assinatura unica para cada numero)
 bin = im2bw(N4, 0.5);
 assinatura(~esqueleto(~bin));
-
 %---
 
 
-%--- Assinatura -> 5 (Assinatura unica para cada n�mero)
-
+%--- Assinatura -> 5 (Assinatura unica para cada numero)
 bin = im2bw(N5, 0.5);
 assinatura(bin);
-
 %---
 
 
-%--- Aproxima��o poligonal do esqueleto -> 6 (Visualiza��o �nica)
-
+%--- Aproximacao poligonal do esqueleto -> 6 (Visualizacao unica)
 bin = im2bw(N6, 0.5);
 aprox(~esqueleto(~bin));
-
 %---
 
 
-%--- Cadeia -> 7 (Visualiza��o unica)
-
+%--- Cadeia -> 7 (Visualizacao unica)
 cadeia(N7);
-
 %---
 
 
 %--- Euler -> 8 (Unico que resulta em -1)
-
-
 printf('Euler\n');
 for i=1:10
   bin = im2bw(Num{i}, 0.5);
   printf('N = %d  ', i - 1);
   euler(~bin);
 end
-
+figure, imshow(N8), title('Euler = -1');
 %---
 
 
-%--- Aproxima��o poligonal -> 9 (Visualiza��o unica)
-
+%--- Aproximacao poligonal -> 9 (Visualizacao unica)
 aprox(N9);
-
 %---
-
